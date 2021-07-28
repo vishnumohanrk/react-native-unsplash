@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "react-native-unsplash",
+    "slug": "react-native-unsplash",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "platforms": ["android"],
+    "assetBundlePatterns": ["**/*"],
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+
+    "primaryColor": "#ffffff",
+    "backgroundColor": "#111111",
+    "androidStatusBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "light-content"
+    },
+    "androidNavigationBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "dark-content"
+    },
+    "android": {
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#111111"
+      },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#111111"
+      },
+      "userInterfaceStyle": "dark"
+    }
+  }
+}
