@@ -39,6 +39,7 @@ export const SlideShowList = ({ data, onSnapEnd }: SlideShowListProps) => {
       snapToInterval={width}
       decelerationRate="fast"
       snapToAlignment="center"
+      disableIntervalMomentum
       scrollEventThrottle={16}
       keyExtractor={i => i.id}
       ListHeaderComponent={StartEndGap}

@@ -30,7 +30,7 @@ const getPhotos = async (
     altDesc: i['alt_description'],
     author: {
       id: i.user.id,
-      avatar: i.user['profile_image']['small'],
+      avatar: i.user['profile_image']['medium'],
       userName: i.user.username,
     },
   }));
