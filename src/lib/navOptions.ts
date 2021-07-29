@@ -35,21 +35,15 @@ export const stackScreenOptions: (
           textTransform: 'capitalize',
         },
       };
-    case 'SlideShow':
-      return {
-        title: '',
-        headerTransparent: true,
-      };
-    case 'User':
-      return {
-        title: `@${(route.params as TRootStackParams['User']).userName}`,
-      };
     case 'Search':
       return {
         ...TransitionPresets.SlideFromRightIOS,
         headerTitle: SearchBar,
       };
     default:
-      return {};
+      return {
+        title: '',
+        headerTransparent: true,
+      };
   }
 };

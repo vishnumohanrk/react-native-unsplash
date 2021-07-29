@@ -1,9 +1,12 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import { ListRenderItem } from 'react-native';
+import { Animated, FlatListProps } from 'react-native';
 
 export type TUser = {
   id: string;
-  avatar: string;
+  avatar: {
+    medium: string;
+    large: string;
+  };
   userName: string;
 };
 
@@ -32,7 +35,7 @@ export type TRootStackParams = {
   Photos: undefined; // HomePage with tabs
   Search: { query: string | null };
   SlideShow: { queryKey: TQueryKey; tag: string };
-  User: { userName: string };
+  User: { userName: string; avatar: string };
   Topic: { slug: string };
 };
 
@@ -44,9 +47,15 @@ export type TStackScreenProps<T extends keyof TRootStackParams> =
 export type TUseRootStackNav<T extends keyof TRootStackParams> =
   TStackScreenProps<T>['navigation'];
 
-export type AppListProps<T extends TTopic | TPhoto> = {
+export type AppListProps<T extends TTopic | TPhoto> = Omit<
+  Animated.AnimatedProps<FlatListProps<T>>,
+  | 'data'
+  | 'numColumns'
+  | 'keyExtractor'
+  | 'columnWrapperStyle'
+  | 'ItemSeparatorComponent'
+> & {
   queryKey: TQueryKey;
-  renderItem: ListRenderItem<T>;
   numColumns: T extends TTopic ? 2 : 2 | 3;
   queryFn: (val: string) => Promise<TTopic[] | TPhoto[]>;
 };

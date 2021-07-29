@@ -11,7 +11,7 @@ import {
 import { AppList } from './AppList';
 import { TouchableRipple } from './TouchableRipple';
 
-type ImageListProps = Omit<AppListProps<TPhoto>, 'keyExtractor' | 'renderItem'>;
+type ImageListProps = Omit<AppListProps<TPhoto>, 'renderItem'>;
 
 export const ImageList = ({
   queryKey,

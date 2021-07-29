@@ -8,7 +8,7 @@ export const SlideShowImageAuthor = ({ avatar, userName }: TUser) => {
   const navigation = useNavigation<TUseRootStackNav<'SlideShow'>>();
 
   const handlePress = () => {
-    navigation.push('User', { userName });
+    navigation.push('User', { userName, avatar: avatar.large });
   };
 
   return (
@@ -16,7 +16,7 @@ export const SlideShowImageAuthor = ({ avatar, userName }: TUser) => {
       <Image
         resizeMode="cover"
         style={styles.avatar}
-        source={{ uri: avatar }}
+        source={{ uri: avatar.medium }}
         accessibilityLabel={userName}
       />
       <Text numberOfLines={1} style={styles.userName}>
