@@ -4,6 +4,7 @@ import {
   NativeScrollEvent,
   StatusBar,
   StyleSheet,
+  useWindowDimensions,
 } from 'react-native';
 
 import { ImageList } from '../components/ImageList';
@@ -11,16 +12,20 @@ import { getUserPhotos } from '../lib/api';
 import { appTheme } from '../lib/constants';
 import { TStackScreenProps } from '../lib/types';
 
-const headerHt = 196;
+const shrunkHeaderHt = 56;
+const fullHeaderHt = shrunkHeaderHt * 3.5;
+const avatarSize = shrunkHeaderHt * 2;
+const avatarRadius = avatarSize / 2;
 
 export const UserPhotosScreen = ({ route }: TStackScreenProps<'User'>) => {
   const { avatar, userName } = route.params;
   const scrollY = React.useRef(new Animated.Value(0)).current;
+  const { width: winWidth } = useWindowDimensions();
 
   const animate = (outputRange: [number, number]) =>
     scrollY.interpolate({
       extrapolate: 'clamp',
-      inputRange: [0, headerHt],
+      inputRange: [0, fullHeaderHt],
       outputRange,
     });
 
@@ -29,26 +34,47 @@ export const UserPhotosScreen = ({ route }: TStackScreenProps<'User'>) => {
       style={[
         styles.header,
         {
-          transform: [{ translateY: animate([0, -headerHt + 56]) }],
+          transform: [
+            { translateY: animate([0, -fullHeaderHt + shrunkHeaderHt]) },
+          ],
         },
       ]}
     >
       <Animated.Image
         resizeMode="cover"
-        style={[styles.image, { opacity: animate([1, 0]) }]}
         source={{ uri: avatar }}
+        accessibilityLabel={userName}
+        style={[
+          styles.image,
+          {
+            transform: [
+              { translateX: animate([20, winWidth - avatarSize - 8]) }, // 20@initPosition -> marginLeft, 8@afterTransform -> marginRight
+              {
+                translateY: animate([
+                  0,
+                  fullHeaderHt / 2 - avatarRadius - shrunkHeaderHt / 10,
+                ]), // (shrunkHeaderHt / 10)@afterTransform -> marginVertical
+              },
+              { translateY: animate([0, avatarRadius]) },
+              { translateX: animate([0, avatarRadius]) },
+              { scale: animate([1, 0.4]) }, // origin -> `bottom right`
+              { translateX: animate([0, -avatarRadius]) },
+              { translateY: animate([0, -avatarRadius]) },
+            ],
+          },
+        ]}
       />
       <Animated.Text
+        numberOfLines={1}
         style={[
           styles.text,
           {
             transform: [
-              { translateY: animate([0, 69]) },
-              { translateX: animate([0, -80]) },
+              { translateY: animate([0, shrunkHeaderHt * 1.23]) }, // -> center, NOTE: headerBackButton part of ReactNavigation stack header
+              { translateX: animate([32, -avatarSize + 64]) }, // 32@initPosition -> 12 marginLeft + 20 imageMarginLeft, 64@afterTransform -> compensate headerBackButton
             ],
           },
         ]}
-        numberOfLines={1}
       >
         @{userName}
       </Animated.Text>
@@ -78,18 +104,17 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   header: {
+    elevation: 4,
     flexDirection: 'row',
     alignItems: 'center',
+    height: fullHeaderHt,
     backgroundColor: appTheme.colors.card,
-    height: headerHt,
-    paddingLeft: 20,
-    elevation: 4,
   },
   image: {
-    width: 112,
-    height: 112,
+    zIndex: 2,
     borderRadius: 9999,
-    marginRight: 12,
+    width: avatarSize,
+    height: avatarSize,
   },
   text: {
     flex: 1,
