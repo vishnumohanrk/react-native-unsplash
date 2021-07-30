@@ -1,18 +1,13 @@
 import * as React from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  TouchableNativeFeedback,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { Animated, StyleSheet, TouchableNativeFeedback } from 'react-native';
 
 import { rippleConfig } from '../lib/constants';
+import { TAnimatedViewStyle } from '../lib/types';
 
 type TouchableRippleProps = {
   onTap: () => void;
   children: React.ReactNode;
-  style: StyleProp<ViewStyle>;
+  style: TAnimatedViewStyle;
 };
 
 export const TouchableRipple = ({
@@ -26,7 +21,7 @@ export const TouchableRipple = ({
     background={rippleConfig}
     touchSoundDisabled={false}
   >
-    <View style={[styles.container, style]}>{children}</View>
+    <Animated.View style={[style, styles.container]}>{children}</Animated.View>
   </TouchableNativeFeedback>
 );
 

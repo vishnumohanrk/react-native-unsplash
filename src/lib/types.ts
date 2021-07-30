@@ -59,3 +59,7 @@ export type AppListProps<T extends TTopic | TPhoto> = Omit<
   numColumns: T extends TTopic ? 2 : 2 | 3;
   queryFn: (val: string) => Promise<TTopic[] | TPhoto[]>;
 };
+
+export type TAnimatedViewStyle = Animated.ComponentProps<
+  typeof Animated.View
+>['style'];

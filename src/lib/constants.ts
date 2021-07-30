@@ -14,3 +14,8 @@ export const appTheme: Theme = {
     background: '#111111',
   },
 };
+
+export const shrunkHeaderHt = 56;
+export const fullHeaderHt = shrunkHeaderHt * 3.5;
+export const avatarSize = shrunkHeaderHt * 2;
+export const avatarRadius = avatarSize / 2;

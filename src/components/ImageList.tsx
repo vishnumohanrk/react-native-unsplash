@@ -4,6 +4,7 @@ import { Image, StyleSheet } from 'react-native';
 
 import {
   AppListProps,
+  TAnimatedViewStyle,
   TImageListScreens,
   TPhoto,
   TUseRootStackNav,
@@ -11,11 +12,14 @@ import {
 import { AppList } from './AppList';
 import { TouchableRipple } from './TouchableRipple';
 
-type ImageListProps = Omit<AppListProps<TPhoto>, 'renderItem'>;
+type ImageListProps = Omit<AppListProps<TPhoto>, 'renderItem'> & {
+  itemStyles?: TAnimatedViewStyle;
+};
 
 export const ImageList = ({
   queryKey,
   numColumns,
+  itemStyles,
   ...rest
 }: ImageListProps) => {
   const navigation = useNavigation<TUseRootStackNav<TImageListScreens>>();
@@ -27,10 +31,13 @@ export const ImageList = ({
       numColumns={numColumns}
       renderItem={({ item }) => (
         <TouchableRipple
-          style={{
-            aspectRatio: 1 / 2.12,
-            width: `${(numColumns === 2 ? 99 : 98) / numColumns}%`,
-          }}
+          style={[
+            itemStyles,
+            {
+              aspectRatio: 1 / 2.12,
+              width: `${(numColumns === 2 ? 99 : 98) / numColumns}%`,
+            },
+          ]}
           onTap={() =>
             navigation.push('SlideShow', { queryKey, tag: item.altDesc })
           }
