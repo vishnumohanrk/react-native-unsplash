@@ -37,9 +37,9 @@ export const ImageList = ({
         >
           <Image
             resizeMode="cover"
-            style={styles.image}
             source={{ uri: item.urls.small }}
             accessibilityLabel={item.altDesc}
+            style={[styles.image, { backgroundColor: `${item.color}80` }]}
           />
         </TouchableRipple>
       )}

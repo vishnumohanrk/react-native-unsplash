@@ -76,9 +76,9 @@ export const SlideShowList = ({ data, onSnapEnd }: SlideShowListProps) => {
           <SlideShowImageAuthor {...item.author} />
           <Image
             resizeMode="cover"
-            style={styles.image}
-            source={{ uri: item.urls.regular }}
             accessibilityLabel={item.altDesc}
+            source={{ uri: item.urls.regular }}
+            style={[styles.image, { backgroundColor: `${item.color}80` }]}
           />
         </Animated.View>
       )}
