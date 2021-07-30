@@ -19,9 +19,11 @@ export const SlideShowScreen = ({
   const { data: cacheData, status } = useQuery<TPhoto[]>(queryKey);
   const { data: newData } = useQuery([name, tag], () => getSearchResults(tag));
 
-  if (!newData) return <FallBack status={status} />;
+  const clickedPhoto = cacheData?.find(i => i.altDesc === tag);
 
-  const data = [cacheData?.find(i => i.altDesc === tag)!, ...newData];
+  if (!newData || !clickedPhoto) return <FallBack status={status} />;
+
+  const data = [clickedPhoto, ...newData];
 
   const onSnapEnd = (val: number) => {
     if (val !== slide) {
@@ -36,7 +38,7 @@ export const SlideShowScreen = ({
 
   const fadeOut = () => {
     Animated.timing(opacity, {
-      toValue: 0.75,
+      toValue: 0.9,
       useNativeDriver: true,
     }).start();
   };
